@@ -198,9 +198,9 @@ input {
 <div id="pouch"></div>
 
 <h2>■単品商品</h2>
-<div id="heart"></div>
-<div id="rare_nui"></div>
-<div id="rare_key"></div>
+<div id="heart_area"></div>
+<div id="rare_nui_area"></div>
+<div id="rare_key_area"></div>
 
 </div>
 </div>
@@ -298,7 +298,7 @@ const v=Math.max(0,Number(el.value)||0);
 if(!v)return;
 qty+=v;
 
-if(PRICE[el.id]) total+=v*PRICE[el.id];
+if(PRICE.hasOwnProperty(el.id)) total+=v*PRICE[el.id];
 else if(el.id.startsWith("op1_")) total+=v*PRICE.op1;
 else if(el.id.startsWith("op2_")) total+=v*PRICE.op2;
 else if(el.id.startsWith("op3_")) total+=v*PRICE.op3;
@@ -403,9 +403,9 @@ createGumi();
 createGroup3("rusk","rusk",PRICE.rusk);
 createGroup3("pouch","pouch",PRICE.pouch);
 
-createSingle("heart","heart","ミニハートチョコ",PRICE.heart);
-createSingle("rare_nui","rare_nui","ぬいぐるみ レア",PRICE.rare_nui);
-createSingle("rare_key","rare_key","ぬいぐるみキーホルダー レア",PRICE.rare_key);
+createSingle("heart_area","heart","ミニハートチョコ",PRICE.heart);
+createSingle("rare_nui_area","rare_nui","ぬいぐるみ レア",PRICE.rare_nui);
+createSingle("rare_key_area","rare_key","ぬいぐるみキーホルダー レア",PRICE.rare_key);
 
 calc();
 
