@@ -76,20 +76,21 @@ h2 {
 
 .item {
   display: flex;
-  gap: 10px;
+  justify-content: space-between; /* ←追加 */
   align-items: center;
-  padding: 12px 0;
-  border-bottom: 1px solid #eee;
+  padding: 16px 0;
+  border-bottom: 1px solid #ddd;
 }
 
 .label {
   flex: 1;
+  font-size: 16px; /* ←少し大きく */
 }
 
 .price {
-  font-size: 12px;
-  color: #666;
-  margin-left: 6px;
+  font-size: 14px;
+  color: #555;
+  margin-left: 8px;
 }
 
 input {
@@ -187,6 +188,20 @@ input {
 <h3>フォトカードセット</h3>
 <div id="photocard"></div>
 
+<h3>カラフルグミ</h3>
+<div id="gumi"></div>
+
+<h3>コーヒーラスク</h3>
+<div id="rusk"></div>
+
+<h3>クリアポーチ&メモセット</h3>
+<div id="pouch"></div>
+
+<h2>■単品商品</h2>
+<div id="heart"></div>
+<div id="rare_nui"></div>
+<div id="rare_key"></div>
+
 </div>
 </div>
 
@@ -200,7 +215,13 @@ random_card:550,
 random_stand:550,
 op1:660,
 op2:1210,
-op3:2750
+op3:2750,
+gumi:1320,
+rusk:1080,
+pouch:1540,
+heart:935,
+rare_nui:2420,
+rare_key:1980
 };
 
 const PHOTO_PRICE={
@@ -216,6 +237,12 @@ const CHARACTERS=[
 "皇坂","城瀬","須王","綾戸","宇京","樋宮","環野","槻本",
 "壱川","隠岐谷","節見","御門","新開","相沢","在間",
 "祠堂","立科","恩田","新名","神家","麻波"
+];
+
+const GROUP3 = [
+"本部・交際部",
+"管理部・強行部",
+"交渉部・特務部"
 ];
 
 /* 生成 */
@@ -236,9 +263,21 @@ createSingle(target,`${prefix}_${c}`,c,price);
 });
 }
 
+function createGroup3(target,prefix,price){
+GROUP3.forEach(g=>{
+createSingle(target,`${prefix}_${g}`,g,price);
+});
+}
+
 function createPhoto(){
 Object.keys(PHOTO_PRICE).forEach(dep=>{
 createSingle("photocard","photo_"+dep,dep,PHOTO_PRICE[dep]);
+});
+}
+
+function createGumi(){
+Object.keys(PHOTO_PRICE).forEach(dep=>{
+createSingle("gumi","gumi_"+dep,dep,PRICE.gumi);
 });
 }
 
@@ -263,6 +302,9 @@ if(PRICE[el.id]) total+=v*PRICE[el.id];
 else if(el.id.startsWith("op1_")) total+=v*PRICE.op1;
 else if(el.id.startsWith("op2_")) total+=v*PRICE.op2;
 else if(el.id.startsWith("op3_")) total+=v*PRICE.op3;
+else if(el.id.startsWith("gumi_")) total+=v*PRICE.gumi;
+else if(el.id.startsWith("rusk_")) total+=v*PRICE.rusk;
+else if(el.id.startsWith("pouch_")) total+=v*PRICE.pouch;
 else if(el.id.startsWith("photo_")){
 const dep=el.id.replace("photo_","");
 total+=v*PHOTO_PRICE[dep];
@@ -345,6 +387,8 @@ calc();
 
 /* 初期化 */
 
+/* 初期化 */
+
 createSingle("random_items","random_badge","アクリルおなまえバッジ",PRICE.random_badge);
 createSingle("random_items","random_card","クリアカード",PRICE.random_card);
 createSingle("random_items","random_stand","セリフアクリルスタンド",PRICE.random_stand);
@@ -354,6 +398,14 @@ createGroup("op2","op2",PRICE.op2);
 createGroup("op3","op3",PRICE.op3);
 
 createPhoto();
+createGumi();
+
+createGroup3("rusk","rusk",PRICE.rusk);
+createGroup3("pouch","pouch",PRICE.pouch);
+
+createSingle("heart","heart","ミニハートチョコ",PRICE.heart);
+createSingle("rare_nui","rare_nui","ぬいぐるみ レア",PRICE.rare_nui);
+createSingle("rare_key","rare_key","ぬいぐるみキーホルダー レア",PRICE.rare_key);
 
 calc();
 
